@@ -1,14 +1,16 @@
 import './App.css';
-
-
+import StrainPage from './Components/StrainPage';
+import Header from './Components/Header';
 
 
 function App() {
 
 
+
   return (
     <div className="App">
-      <h1>Strains</h1>
+      <StrainPage />
+      <Header />
 
   
     </div>
