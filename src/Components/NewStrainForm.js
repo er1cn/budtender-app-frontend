@@ -1,67 +1,82 @@
-import React, {useState} from 'react'
-import { BASE_URL } from '../Constraints/routes';
+import { useState } from "react";
 
-function NewStrainForm(onAddStrain) {
-    const [name, setName] = useState("");
-  const [image, setImage] = useState("");
-  const [description, setDescription] = useState("");
-  const [flavors, setFlavors] = useState("");
+const initialState = {
+  name: "",
+  image: "",
+  flavor: "",
+  description: "",
+  rating: "",
+};
 
-    function handleSubmit(e) {
-      e.preventDefault();
-      fetch(BASE_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: name,
-          image: image,
-          description: description,
-          flavors: flavors
-        }),
-      })
-        .then((r) => r.json())
-        .then((newStrain) => onAddStrain(newStrain));
-    }
-  
+function NewStrainForm({ onAddStrain }) {
+  const [formData, setFormData] = useState(initialState);
 
-    return (
-        <div className="new-strain-form">
+  function handleChange(e) {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    fetch("strains", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((r) => r.json())
+      .then((newStrain) => {
+        setFormData(initialState);
+        onAddStrain(newStrain);
+      });
+  }
+
+  return (
+    <div className="card">
       <h2>New Strain</h2>
       <form onSubmit={handleSubmit}>
+        <label htmlFor="name">Name: </label>
         <input
           type="text"
-          name="name"
-          placeholder="Strain name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          id="name"
+          value={formData.name}
+          onChange={handleChange}
         />
+        <label htmlFor="image">Image URL: </label>
         <input
           type="text"
-          name="image"
-          placeholder="Image URL"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
-          />
-          <input
-            type="text"
-            name="description"
-            placeholder="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <input
-            type="text"
-            name="flavors"
-            placeholder="flavors"
-            value={flavors}
-            onChange={(e) => setFlavors(e.target.value)}
-          />
-        <button type="submit">Add Strain</button>
+          id="image"
+          value={formData.image}
+          onChange={handleChange}
+        />
+        <label htmlFor="flavors">Flavors: </label>
+        <input
+          type="text"
+          id="flavors"
+          value={formData.flavors}
+          onChange={handleChange}
+        />
+        <label htmlFor="description">Description: </label>
+        <textarea
+          id="description"
+          value={formData.description}
+          onChange={handleChange}
+        />
+        <label htmlFor="rating">Rating: </label>
+        <input
+          type="number"
+          id="rating"
+          max="5"
+          value={formData.rating}
+          onChange={handleChange}
+        />
+        <button type="submit">Submit</button>
       </form>
     </div>
   );
 }
 
-export default NewStrainForm
+export default NewStrainForm;

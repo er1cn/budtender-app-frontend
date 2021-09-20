@@ -1,33 +1,50 @@
-import React from 'react'
+import StarRating from "./Search";
 
-function StrainCard({ strain }) {
-    const { name, image, description, flavors, BASE_URL, strains, setStrains } = strain;
+function StrainItem({ strain, onUpdateStrain, onDeleteStrain }) {
+  const { id, image, name, description, flavors, rating } = strain;
 
-   function handleDeleteStrain(id) {
-     fetch(BASE_URL + "/strain.id", {
-       method: "DELETE",
-     });
-     const newStrains = strains.filter((strain) => strain.id !== id);
-     setStrains(newStrains);
-   }
- 
-    
-    return (
-      <div>
-        <li className="card">
-          <img src={image} alt={name} />
-          <h2>{name}</h2>
-          <h4>
-            <p>{description}</p>
-          </h4>
-          <br />
-          <p>Flavors: {flavors}</p>
-        </li>
-        <button className="strain-btn" onClick={handleDeleteStrain}>
-          Delete
-        </button>
+  function handleUpdateRating(pct) {
+    const newRating = pct * 5;
+    fetch(`/strains/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ rating: newRating }),
+    })
+      .then((r) => r.json())
+      .then(onUpdateStrain);
+  }
+
+  function handleDeleteStrain() {
+    fetch(`/strains/${id}`, {
+      method: "DELETE",
+    }).then((r) => {
+      if (r.ok) {
+        onDeleteStrain(strain);
+      }
+    });
+  }
+
+  return (
+    <div className="strain-item card">
+      <img src={image} alt={name} />
+      <div className="details">
+        <h2>{name}</h2>
+        <p>{description}</p>
+        <p>
+          Flavors: <em>{flavors}</em>
+        </p>
+        <div>
+          Rating:{" "}
+          <StarRating percentage={rating / 5} onClick={handleUpdateRating} />
+        </div>
+        <p>
+          <button onClick={handleDeleteStrain}>Delete Strain</button>
+        </p>
       </div>
-    );
+    </div>
+  );
 }
 
-export default StrainCard
+export default StrainItem;
