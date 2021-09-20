@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import Header from "./Components/Header";
 import NewStrainForm from "./Components/NewStrainForm";
-import StrainCard from "./Components/StrainCard";
+import StrainCard from "./Components/StrainItem";
+import './App.css';
 
 function App() {
   const [strains, setStrains] = useState([]);
@@ -19,7 +20,7 @@ function App() {
   function handleUpdateStrain(updatedStrain) {
     setStrains((strains) =>
       strains.map((strain) => {
-        return strain.id === updatedStrain.id ? updatedStrain : Strain;
+        return strain.id === updatedStrain.id ? updatedStrain : strain;
       })
     );
   }

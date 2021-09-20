@@ -1,4 +1,4 @@
-import StarRating from "./Search";
+import StarRating from "./StarRating";
 
 function StrainItem({ strain, onUpdateStrain, onDeleteStrain }) {
   const { id, image, name, description, flavors, rating } = strain;

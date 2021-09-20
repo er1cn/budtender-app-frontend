@@ -1,144 +1,134 @@
 :root {
-  --green: rgb(39, 189, 39);
+  --main-bg-color: rgb(255, 248, 231);
+  --main-font-color: rgb(0, 0, 0);
+  --theme-primary: rgb(254, 202, 27);
 }
 
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
+html,
 body {
-  font-family: "Playfair Display", serif;
+  margin: 0;
+  padding: 0;
 }
 
-h2 {
-  margin-bottom: 1rem;
+body {
+  font-family: "Prompt", sans-serif;
+  background-color: var(--main-bg-color);
 }
 
-button {
-  padding: 0.25rem 1rem;
-  font-family: inherit;
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Sriracha", cursive;
+  margin-bottom: 0.75em;
+}
+
+.card {
+  margin: 2rem 0;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: var(--theme-primary);
+  color: var(--main-font-color);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+header h1,
+header h3 {
+  margin: 0;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+}
+
+.filters input[type="text"] {
+  font-size: 14px;
+  padding: 0.25rem;
+  margin: 0 1rem 0 0.25rem;
+}
+
+main {
+  width: 80vw;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.strain-item {
+  display: flex;
+}
+
+.strain-item .details {
+  margin-left: 1rem;
+  position: relative;
+}
+
+.strain-item .favorite {
+  position: absolute;
+  font-size: 2rem;
+  bottom: 0;
+  right: 0;
+  background-color: transparent;
   border: none;
   cursor: pointer;
 }
 
-button.primary {
-  background-color: var(--green);
-  color: white;
+.strain-item .favorite:focus {
+  outline: none;
 }
 
-.app {
-  margin: 0 auto;
-  max-width: 1200px;
-}
-
-header h1 {
-  font-size: 2.5em;
-  font-weight: 900;
-  text-align: center;
-  padding: 0.5rem 0;
-  ;
-}
-
-.logo {
-  font-size: 1.25em;
-  padding-left: 0.5rem;
+.strain-item .favorite span {
   color: transparent;
-  text-shadow: 0 0 0 var(--green);
+  text-shadow: 0 0 0 var(--theme-primary);
 }
 
-main {
-  padding: 0 1rem;
+.strain-item .details p {
+  margin: 0.75rem 0;
 }
 
-.new-strain-form {
-  padding: 2rem 1rem;
-  margin: 2rem 0;
-  background-color: rgb(161,202,241)
+.star-rating {
+  color: rgba(0, 0, 0, 0.1);
+  font-size: 1.5rem;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
 }
 
-.new-strain-form form {
+.star-rating .foreground {
+  color: var(--theme-primary);
+  position: absolute;
   display: flex;
-  justify-content: center;
+  overflow: hidden;
 }
 
-.new-strain-form input {
-  margin-right: 2rem;
-  flex: 1;
+.star-rating .background {
+  display: flex;
 }
 
-.new-strain-form button {
-  width: 150px;
-}
-
-.searchbar {
-  padding: 1rem;
+form {
   display: flex;
   flex-direction: column;
 }
 
-label {
-  font-weight: bold;
-  display: block;
+form input,
+form textarea {
+  margin-bottom: 0.5rem;
 }
 
-input {
-  padding: 0.25rem;
-  border: none;
-  font-family: Helvetica;
-  font-size: 1.0rem;
-  border-bottom: 2px solid gray;
-  transition: all 0.2s;
-  width: 100%;
-}
-
-input:focus {
-  outline: none;
-  border-bottom: 2px solid var(--green);
-}
-
-.cards {
-  list-style: none;
-}
-
-.card {
-  margin: 1rem;
-  font-family: Helvetica Neue;
-  
-}
-
-.card img {
-  width: 100%;
-}
-
-.card button {
-  margin-top: 0.5rem;
-}
-
-.strain-btn {
-  padding: 0.25rem 1rem;
-}
-
-@media (min-width: 768px) {
-  .cards {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .card {
-    width: calc(33% - 2rem);
-  }
-}
-
-@media (min-width: 1024px) {
-  .card {
-    width: calc(25% - 2rem);
-  }
-}
-
-@media (min-width: 1200px) {
-  .card {
-    width: calc(20% - 2rem);
-  }
+form button[type="submit"] {
+  width: 150px;
 }
