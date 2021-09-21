@@ -1,14 +1,16 @@
-import React from 'react'
+import React from "react";
 
 function Header() {
-    return (
-      <header>
-        <h1>The Budtender's Top Strains </h1>
-         <span className="logo" role="img">
+  return (
+    <header>
+      <h1>
+        Budtender's Top Strains
+        <span className="logo" role="img">
           🍃
-         </span>
-      </header>
-    );
+        </span>
+      </h1>
+    </header>
+  );
 }
 
-export default Header
+export default Header;

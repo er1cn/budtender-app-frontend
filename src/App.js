@@ -1,53 +1,15 @@
-import { useState, useEffect } from "react";
+import React from "react";
+import "./App.css";
 import Header from "./Components/Header";
-import NewStrainForm from "./Components/NewStrainForm";
-import StrainCard from "./Components/StrainItem";
-import './App.css';
+import StrainsContainer from "./Components/StrainsContainer";
 
 function App() {
-  const [strains, setStrains] = useState([]);
-
-  useEffect(() => {
-    fetch("/strains")
-      .then((r) => r.json())
-      .then(setStrains);
-  }, []);
-
-  function handleAddStrain(addedStrain) {
-    setStrains((strains) => [...strains, addedStrain]);
-  }
-
-  function handleUpdateStrain(updatedStrain) {
-    setStrains((strains) =>
-      strains.map((strain) => {
-        return strain.id === updatedStrain.id ? updatedStrain : strain;
-      })
-    );
-  }
-
-  function handleDeleteStrain(deletedStrain) {
-    setStrains((strains) =>
-      strains.filter((strain) => strain.id !== deletedStrain.id)
-    );
-  }
-
   return (
-    <>
+    <div className="App">
       <Header />
-      <main>
-        <NewStrainForm onAddStrain={handleAddStrain} />
-        <section className="strain-list">
-          {strains.map((strain) => (
-            <StrainCard
-              key={strain.id}
-              Strain={strain}
-              onUpdateStrain={handleUpdateStrain}
-              onDeleteStrain={handleDeleteStrain}
-            />
-          ))}
-        </section>
-      </main>
-    </>
+      <StrainsContainer />
+   
+    </div>
   );
 }
 

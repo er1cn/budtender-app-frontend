@@ -1,79 +1,77 @@
-import { useState } from "react";
+import React, {useState} from 'react'
 
-const initialState = {
-  name: "",
-  image: "",
-  flavor: "",
-  description: "",
-  rating: "",
-};
+function NewStrainForm({ addStrain }) {
+  const [formState, setFormState] = useState({
+    name: "",
+    image: "",
+    description: "",
+    flavors: "",
+  });
 
-function NewStrainForm({ onAddStrain }) {
-  const [formData, setFormData] = useState(initialState);
-
-  function handleChange(e) {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
+  function handleChange(event) {
+    const userInput = event.target.value;
+    const fieldName = event.target.name;
+    setFormState({
+      ...formState,
+      [fieldName]: userInput,
     });
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    fetch("strains", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((r) => r.json())
-      .then((newStrain) => {
-        setFormData(initialState);
-        onAddStrain(newStrain);
-      });
+  function handleSubmit(event) {
+    event.preventDefault();
+    const strain = {
+      name: formState.name,
+      image: formState.image,
+      description: formState.description,
+      flavors: formState.flavors,
+    };
+    addStrain(strain);
   }
 
   return (
-    <div className="card">
-      <h2>New Strain</h2>
+    <div className="new-strain-form">
+      <h2 className="strain-form-heading">Add a Strain</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name: </label>
-        <input
-          type="text"
-          id="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-        <label htmlFor="image">Image URL: </label>
-        <input
-          type="text"
-          id="image"
-          value={formData.image}
-          onChange={handleChange}
-        />
-        <label htmlFor="flavors">Flavors: </label>
-        <input
-          type="text"
-          id="flavors"
-          value={formData.flavors}
-          onChange={handleChange}
-        />
-        <label htmlFor="description">Description: </label>
-        <textarea
-          id="description"
-          value={formData.description}
-          onChange={handleChange}
-        />
-        <label htmlFor="rating">Rating: </label>
-        <input
-          type="number"
-          id="rating"
-          max="5"
-          value={formData.rating}
-          onChange={handleChange}
-        />
-        <button type="submit">Submit</button>
+        <label>
+          Name:
+          <input
+            type="text"
+            name="name"
+            value={formState.name}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Image:
+          <input
+            type="text"
+            name="image"
+            placeholder="Image URL"
+            value={formState.image}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Description:
+          <input
+            type="text"
+            name="description"
+            value={formState.description}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Flavors:
+          <input
+            type="text"
+            name="flavors"
+            value={formState.flavors}
+            onChange={handleChange}
+          />
+        </label>
+        <button type="submit" onSubmit={handleSubmit}>
+          Add Strain
+        </button>
       </form>
     </div>
   );
